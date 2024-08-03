@@ -24,7 +24,6 @@ namespace Mini_Jame_Gam_3
         }
 
         private void MovementStateChanged(MovementState previousState, MovementState newState) {
-            Debug.Log(previousState + " , " + newState);
             if (previousState == MovementState.Idle || previousState == MovementState.Walking) {
                 if (newState == MovementState.Sprinting || newState == MovementState.Air) {
                     PlayStartSprintingFeedbacks();

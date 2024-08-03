@@ -12,7 +12,7 @@ namespace Jame_Gam_33
         [BoxGroup("Parameters"), SerializeField] private float _maxRotationAngle = 90f;
 
         [BoxGroup("References")]
-        [SerializeField, SceneObjectsOnly] private CinemachineCamera _mainCam;
+        [SerializeField, SceneObjectsOnly] private Transform _orientation;
         [Space]
         public bool ShowHelpers;
         [ShowIfGroup("ShowHelpers")]
@@ -40,7 +40,7 @@ namespace Jame_Gam_33
 
             _xRotation = Mathf.Clamp(_xRotation, -_maxRotationAngle, _maxRotationAngle);
 
-            _mainCam.transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
+            _orientation.transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
             transform.rotation = Quaternion.Euler(0f, _yRotation, 0f);
         }
 

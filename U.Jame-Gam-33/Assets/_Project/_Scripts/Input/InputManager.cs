@@ -1,4 +1,5 @@
 using Acelab.Core.Utility;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,9 @@ namespace Mini_Jame_Gam_3
         public delegate void StopSprintingEvent();
         public event StopSprintingEvent OnStopSprinting;
 
+        public delegate void ProjectEvent();
+        public event ProjectEvent OnProject;
+
         protected override void Awake() {
             base.Awake();
             _controls = new IA_Player();
@@ -27,7 +31,11 @@ namespace Mini_Jame_Gam_3
             _controls.Player.Jump.performed += Jump;
             _controls.Player.Sprint.started += StartSprinting;
             _controls.Player.Sprint.canceled += StopSprinting;
+
+            _controls.Camera.Project.performed += Project;
         }
+
+
 
         private void OnDisable() {
             _controls.Disable();
@@ -35,6 +43,16 @@ namespace Mini_Jame_Gam_3
             _controls.Player.Jump.performed -= Jump;
             _controls.Player.Sprint.started -= StartSprinting;
             _controls.Player.Sprint.canceled -= StopSprinting;
+
+            _controls.Camera.Project.performed -= Project;
+        }
+
+        public void EnablePlayerInputs() {
+            _controls.Player.Enable();
+        }
+
+        public void DisablePlayerInputs() {
+            _controls.Player.Disable();
         }
 
         public Vector2 GetPlayerMovement()
@@ -43,7 +61,7 @@ namespace Mini_Jame_Gam_3
         public Vector2 GetMouseDelta()
             => _controls.Player.Look.ReadValue<Vector2>();
 
-        public void Jump(InputAction.CallbackContext ctx) {
+        private void Jump(InputAction.CallbackContext ctx) {
             OnJump?.Invoke();
         }
 
@@ -53,6 +71,10 @@ namespace Mini_Jame_Gam_3
 
         private void StopSprinting(InputAction.CallbackContext context) {
             OnStopSprinting?.Invoke();
+        }
+
+        private void Project(InputAction.CallbackContext context) {
+            OnProject?.Invoke();
         }
     }
 }
