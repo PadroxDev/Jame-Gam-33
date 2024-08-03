@@ -34,6 +34,7 @@ namespace Jame_Gam_33
 
         private void Update() {
             _mouseDelta = _inputManager.GetMouseDelta();
+            if (_mouseDelta == Vector2.zero) return;
 
             _xRotation -= _mouseDelta.y * Time.deltaTime * _horizontalSensibility;
             _yRotation += _mouseDelta.x * Time.deltaTime * _verticalSensibility;
