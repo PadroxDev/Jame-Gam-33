@@ -61,6 +61,9 @@ namespace Mini_Jame_Gam_3
         public Vector2 GetMouseDelta()
             => _controls.Player.Look.ReadValue<Vector2>();
 
+        public Vector2 GetMousePos()
+            => _controls.Mouse.Position.ReadValue<Vector2>();
+
         private void Jump(InputAction.CallbackContext ctx) {
             OnJump?.Invoke();
         }

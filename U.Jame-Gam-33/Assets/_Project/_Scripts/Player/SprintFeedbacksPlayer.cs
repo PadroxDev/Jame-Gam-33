@@ -36,10 +36,16 @@ namespace Mini_Jame_Gam_3
         }
 
         private void PlayStartSprintingFeedbacks() {
+            if (_stopSprintingFeedbacks.IsPlaying)
+                _stopSprintingFeedbacks.StopFeedbacks();
+
             _startSprintingFeedbacks.PlayFeedbacks();
         }
 
         private void PlayStopSprintingFeedbacks() {
+            if (_startSprintingFeedbacks.IsPlaying)
+                _startSprintingFeedbacks.StopFeedbacks();
+
             _stopSprintingFeedbacks.PlayFeedbacks();
         }
     }
