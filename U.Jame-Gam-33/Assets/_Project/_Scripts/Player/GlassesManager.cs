@@ -10,10 +10,16 @@ namespace Mini_Jame_Gam_3
         [BoxGroup("Glasses"), SerializeField] private SO_GlassesBase _redGlasses;
 
         [BoxGroup("References"), SerializeField] private Transform _glassesPoint;
+        [BoxGroup("References"), SerializeField] private GlassesWheel _glassesWheel;
+        private InputManager _inputManager;
         private GameObject _currentGlassesModel;
         private SO_GlassesBase _currentGlasses;
 
         private void Start() {
+            _inputManager = InputManager.Instance;
+            _inputManager.OnOpenWheel += OpenWheel;
+            _inputManager.OnCloseWheel += CloseWheel;
+
             EquipGlasses(_defaultGlasses);
         }
 
@@ -33,7 +39,7 @@ namespace Mini_Jame_Gam_3
             _currentGlasses.FixedUpdate();
         }
 
-        private void EquipGlasses(SO_GlassesBase newGlasses) {
+        public void EquipGlasses(SO_GlassesBase newGlasses) {
             if (newGlasses == _currentGlasses) return;
 
             if(_currentGlasses != null) {
@@ -62,6 +68,20 @@ namespace Mini_Jame_Gam_3
 
         private void SpawnGlassesModel() {
             _currentGlassesModel = Instantiate(_currentGlasses.GlassesPrefab, _glassesPoint);
+        }
+
+        private void OpenWheel() {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            _inputManager.DisablePlayerLook();
+            _glassesWheel.OpenWheel();
+        }
+
+        private void CloseWheel() {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            _inputManager.EnablePlayerLook();
+            _glassesWheel.CloseWheel();
         }
     }
 }

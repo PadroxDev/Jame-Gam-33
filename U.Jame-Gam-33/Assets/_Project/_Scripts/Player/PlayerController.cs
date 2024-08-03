@@ -1,5 +1,6 @@
 using Acelab.Core;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -86,7 +87,12 @@ namespace Mini_Jame_Gam_3
 
         private void FixedUpdate() {
             HandleMovement();
+            ApplyGravity();
             RestrictSpeed();
+        }
+
+        private void ApplyGravity() {
+            _rb.useGravity = !_isOnSlope;
         }
 
         private bool HandleStateChange() {
@@ -152,8 +158,6 @@ namespace Mini_Jame_Gam_3
             } else {
                 MoveOnFlatOrAir();
             }
-
-            _rb.useGravity = !_isOnSlope;
         }
 
         private void MoveOnSlope() {

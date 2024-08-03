@@ -162,6 +162,34 @@
             ]
         },
         {
+            "name": "UI",
+            "id": "e7b0291a-8269-4197-b835-93234791aa8e",
+            "actions": [
+                {
+                    "name": "OpenWheel",
+                    "type": "Button",
+                    "id": "ddb35e17-c360-4504-bc47-9baaac77681c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ea1070a0-8fd6-4e97-8e28-97d9397c61a1",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Mouse",
             "id": "c89dd8b4-c95f-461d-b714-57b1fa07402f",
             "actions": [

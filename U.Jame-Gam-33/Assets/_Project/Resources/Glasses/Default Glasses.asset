@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlassesPrefab: {fileID: 3993497876769201935, guid: f3cc2c400650c664c894e570266233ae,
     type: 3}
+  Name: Default Glasses
+  Icon: {fileID: -6415259062133742075, guid: 3da05e9f66c9f254c8875335e7e9179e, type: 3}
+  Color: {r: 0.6039216, g: 0.8862746, b: 0.97647065, a: 1}

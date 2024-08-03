@@ -20,6 +20,12 @@ namespace Mini_Jame_Gam_3
         public delegate void ProjectEvent();
         public event ProjectEvent OnProject;
 
+        public delegate void OpenWheelEvent();
+        public event OpenWheelEvent OnOpenWheel;
+
+        public delegate void CloseWheelEvent();
+        public event CloseWheelEvent OnCloseWheel;
+
         protected override void Awake() {
             base.Awake();
             _controls = new IA_Player();
@@ -33,9 +39,10 @@ namespace Mini_Jame_Gam_3
             _controls.Player.Sprint.canceled += StopSprinting;
 
             _controls.Camera.Project.performed += Project;
+
+            _controls.UI.OpenWheel.started += OpenWheel;
+            _controls.UI.OpenWheel.canceled += CloseWheel;
         }
-
-
 
         private void OnDisable() {
             _controls.Disable();
@@ -45,6 +52,17 @@ namespace Mini_Jame_Gam_3
             _controls.Player.Sprint.canceled -= StopSprinting;
 
             _controls.Camera.Project.performed -= Project;
+
+            _controls.UI.OpenWheel.started -= OpenWheel;
+            _controls.UI.OpenWheel.canceled -= CloseWheel;
+        }
+
+        public void EnablePlayerLook() {
+            _controls.Player.Look.Enable();
+        }
+
+        public void DisablePlayerLook() {
+            _controls.Player.Look.Disable();
         }
 
         public void EnablePlayerInputs() {
@@ -78,6 +96,14 @@ namespace Mini_Jame_Gam_3
 
         private void Project(InputAction.CallbackContext context) {
             OnProject?.Invoke();
+        }
+
+        private void OpenWheel(InputAction.CallbackContext context) {
+            OnOpenWheel?.Invoke();
+        }
+
+        private void CloseWheel(InputAction.CallbackContext context) {
+            OnCloseWheel?.Invoke();
         }
     }
 }

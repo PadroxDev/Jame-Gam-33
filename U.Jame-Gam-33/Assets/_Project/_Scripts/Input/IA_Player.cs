@@ -184,6 +184,34 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""UI"",
+            ""id"": ""e7b0291a-8269-4197-b835-93234791aa8e"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenWheel"",
+                    ""type"": ""Button"",
+                    ""id"": ""ddb35e17-c360-4504-bc47-9baaac77681c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ea1070a0-8fd6-4e97-8e28-97d9397c61a1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Mouse"",
             ""id"": ""c89dd8b4-c95f-461d-b714-57b1fa07402f"",
             ""actions"": [
@@ -223,6 +251,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Project = m_Camera.FindAction("Project", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_OpenWheel = m_UI.FindAction("OpenWheel", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Position = m_Mouse.FindAction("Position", throwIfNotFound: true);
@@ -232,6 +263,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, IA_Player.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, IA_Player.Camera.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, IA_Player.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Mouse.enabled, "This will cause a leak and performance issues, IA_Player.Mouse.Disable() has not been called.");
     }
 
@@ -407,6 +439,52 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     }
     public CameraActions @Camera => new CameraActions(this);
 
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_OpenWheel;
+    public struct UIActions
+    {
+        private @IA_Player m_Wrapper;
+        public UIActions(@IA_Player wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenWheel => m_Wrapper.m_UI_OpenWheel;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @OpenWheel.started += instance.OnOpenWheel;
+            @OpenWheel.performed += instance.OnOpenWheel;
+            @OpenWheel.canceled += instance.OnOpenWheel;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @OpenWheel.started -= instance.OnOpenWheel;
+            @OpenWheel.performed -= instance.OnOpenWheel;
+            @OpenWheel.canceled -= instance.OnOpenWheel;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
+
     // Mouse
     private readonly InputActionMap m_Mouse;
     private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
@@ -462,6 +540,10 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     public interface ICameraActions
     {
         void OnProject(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnOpenWheel(InputAction.CallbackContext context);
     }
     public interface IMouseActions
     {
