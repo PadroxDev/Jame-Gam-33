@@ -10,7 +10,7 @@ namespace Mini_Jame_Gam_3
         public Sprite Icon;
         public Color Color;
 
-        public virtual void Initialize(object player) { }
+        public virtual void Initialize(GameObject player) { }
 
         public abstract void Equip();
         public virtual void Update() { }

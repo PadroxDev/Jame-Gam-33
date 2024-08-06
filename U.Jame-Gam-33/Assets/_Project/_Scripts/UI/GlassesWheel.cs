@@ -35,16 +35,16 @@ namespace Mini_Jame_Gam_3
             _lastSelectedGlassesButton = EventSystem.current.currentSelectedGameObject;
         }
 
-        public void UnlockGlasses(SO_GlassesBase glasses) {
+        public void UnlockGlasses(SO_GlassesBase glasses, bool instantEquip = false) {
             if(_currentIndex >= _wheelButtons.Length) {
                 Debug.LogWarning($"Trying to unlock more than {_wheelButtons.Length} glasses in the Wheel !");
                 return;
             }
 
             GlassesWheelButton wheelBtn = _wheelButtons[ _currentIndex ];
-            wheelBtn.Initialize(glasses, _currentIndex == 0);
+            wheelBtn.Initialize(glasses, _currentIndex == 0 || instantEquip);
 
-            if(_currentIndex == 0) {
+            if(_currentIndex == 0 || instantEquip) {
                 _lastSelectedGlassesButton = wheelBtn.gameObject;
                 _wheelCenter.UpdateGlassesData(glasses);
             }

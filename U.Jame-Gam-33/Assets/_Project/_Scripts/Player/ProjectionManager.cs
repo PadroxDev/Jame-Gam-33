@@ -39,9 +39,11 @@ namespace Mini_Jame_Gam_3
 
             if(_projection) {
                 _inputManager.DisablePlayerInputs();
+                _inputManager.DisableGlassesWheel();
                 _projectFeedbacks.PlayFeedbacks();
             } else {
                 _inputManager.EnablePlayerInputs();
+                _inputManager.EnableGlassesWheel();
                 _returnFeedbacks.PlayFeedbacks();
             }
         }

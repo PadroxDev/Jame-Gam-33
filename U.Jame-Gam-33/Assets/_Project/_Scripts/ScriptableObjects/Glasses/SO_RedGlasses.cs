@@ -6,7 +6,7 @@ namespace Mini_Jame_Gam_3
     public class SO_RedGlasses : SO_GlassesBase {
         private RedObjects _redObjs;
 
-        public override void Initialize(object player) {
+        public override void Initialize(GameObject player) {
             _redObjs = LevelManager.Instance.RedObjs;
         }
 

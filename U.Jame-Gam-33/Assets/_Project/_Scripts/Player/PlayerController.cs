@@ -1,6 +1,6 @@
 using Acelab.Core;
+using Acelab.Modules.Audio;
 using Sirenix.OdinInspector;
-using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -35,8 +35,12 @@ namespace Mini_Jame_Gam_3
         private bool _isOnSlope;
         private bool _exitingSlope;
 
+        [BoxGroup("Audio"), SerializeField] private float _landSFXVol;
+        private AudioController _audioController;
+
         [BoxGroup("References")]
         [SceneObjectsOnly, SerializeField] private CinemachineCamera _mainCam;
+        [SceneObjectsOnly, SerializeField] private CinemachineImpulseSource _landingSource;
         private InputManager _inputManager;
         private Rigidbody _rb;
 
@@ -60,6 +64,8 @@ namespace Mini_Jame_Gam_3
         }
 
         private void Start() {
+            _audioController = AudioController.Instance;
+
             _inputManager = InputManager.Instance;
             _inputManager.OnJump += JumpAttempt;
             _inputManager.OnStartSprinting += StartSprinting;
@@ -130,7 +136,12 @@ namespace Mini_Jame_Gam_3
                 _isGrounded = false;
                 return;
             }
+            bool wasGrounded = _isGrounded;
             _isGrounded = Physics.Raycast(_groundCheck.position, Vector3.down, _groundCheckDistance, _whatIsGround);
+            if(!wasGrounded && _isGrounded) {
+                _audioController.PlayAudio(Acelab.Modules.Audio.AudioType.SFX_FeetLand, transform.position, _landSFXVol);
+                _landingSource.GenerateImpulse();
+            }
         }
 
         private void SlopeCheck() {

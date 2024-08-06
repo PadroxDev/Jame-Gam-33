@@ -7,7 +7,6 @@ namespace Mini_Jame_Gam_3
     public class GlassesManager : MonoBehaviour
     {
         [BoxGroup("Glasses"), SerializeField] private SO_GlassesBase _defaultGlasses;
-        [BoxGroup("Glasses"), SerializeField] private SO_GlassesBase _redGlasses;
 
         [BoxGroup("References"), SerializeField] private Transform _glassesPoint;
         [BoxGroup("References"), SerializeField] private GlassesWheel _glassesWheel;
@@ -20,14 +19,10 @@ namespace Mini_Jame_Gam_3
             _inputManager.OnOpenWheel += OpenWheel;
             _inputManager.OnCloseWheel += CloseWheel;
 
-            EquipGlasses(_defaultGlasses);
+            //EquipGlasses(_defaultGlasses);
         }
 
         private void Update() {
-            if(Input.GetKeyDown(KeyCode.E)) {
-                EquipGlasses(_currentGlasses == _defaultGlasses ? _redGlasses : _defaultGlasses);
-            }
-
             if (_currentGlasses == null) return;
 
             _currentGlasses.Update();

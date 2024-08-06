@@ -65,6 +65,14 @@ namespace Mini_Jame_Gam_3
             _controls.Player.Look.Disable();
         }
 
+        public void EnableGlassesWheel() {
+            _controls.UI.OpenWheel.Enable();
+        }
+
+        public void DisableGlassesWheel() {
+            _controls.UI.OpenWheel.Disable();
+        }
+
         public void EnablePlayerInputs() {
             _controls.Player.Enable();
         }

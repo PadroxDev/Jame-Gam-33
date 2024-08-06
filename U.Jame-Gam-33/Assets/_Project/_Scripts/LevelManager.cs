@@ -1,5 +1,7 @@
+using Acelab.Core;
 using Acelab.Core.Utility;
 using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 namespace Mini_Jame_Gam_3
@@ -8,19 +10,19 @@ namespace Mini_Jame_Gam_3
     {
         [BoxGroup("Level"), SerializeField] private SO_GlassesBase[] _defaultGlasses;
         [BoxGroup("Level"), SerializeField] private RedObjects _redObjs;
+        [BoxGroup("Level"), SerializeField] private Transform _greenOrbs;
         private GlassesWheel _glassesWheel;
-        [SerializeField] private GlassesManager _TEMPORARYglassesManagerTEMPORARY;
 
         public RedObjects RedObjs { get { return _redObjs; } }
-        
-        private void Start() {
+        public Transform GreenOrbs { get { return _greenOrbs; } }
+
+        public IEnumerator UnlockDefaultGlasses() {
+            yield return Acer.GetWait(0.2f);
             _glassesWheel = GlassesWheel.Instance;
-            
-            foreach(SO_GlassesBase glasses in _defaultGlasses) {
+
+            foreach (SO_GlassesBase glasses in _defaultGlasses) {
                 _glassesWheel.UnlockGlasses(glasses);
             }
-
-            //_TEMPORARYglassesManagerTEMPORARY.EquipGlasses(_defaultGlasses[0]);
         }
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1e342b231918b48aeb872c486ddcc1, type: 3}
   m_Name: Red Glasses
   m_EditorClassIdentifier: 
-  GlassesPrefab: {fileID: 7981088169366468287, guid: b02900733c1ead645a2550b5628717f9,
+  GlassesPrefab: {fileID: 1926247261779002692, guid: 1167419d5b63e37458442a01a1295597,
     type: 3}
   Name: Red Glasses
-  Icon: {fileID: 21300012, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+  Icon: {fileID: 21300000, guid: 3fb64ee1f8be58d4195c632d32668892, type: 3}
   Color: {r: 0.93962264, g: 0.38825914, b: 0.38825914, a: 1}
